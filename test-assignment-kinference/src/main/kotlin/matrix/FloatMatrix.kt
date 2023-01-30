@@ -38,10 +38,8 @@ class FloatMatrix(
         }
     }
 
-    fun apply(func: (Float) -> Float) {
-        for (i in data.indices) {
-            data[i] = func(data[i])
-        }
+    fun apply(func: (Float) -> Float) : FloatMatrix{
+        return FloatMatrix(this.rows, this.columns) { i -> func(this.data[i]) }
     }
 
     operator fun get(row: Int, column: Int): Float {
