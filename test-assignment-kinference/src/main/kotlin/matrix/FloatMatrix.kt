@@ -6,6 +6,9 @@ import kotlinx.coroutines.coroutineScope
 import kotlin.concurrent.thread
 import kotlin.math.abs
 
+/***
+ * Float 2D array.
+ */
 class FloatMatrix(
     val rows: Int,
     val columns: Int,
@@ -27,6 +30,9 @@ class FloatMatrix(
         FloatArray(rows * columns) { i -> init(i / columns, i % columns) }
     )
 
+    /***
+     * Simple matrix multiplication.
+     */
     override fun dot(other: Matrix): FloatMatrix {
         require(other is FloatMatrix) { "other should be FloatMatrix" }
         require(this.columns == other.rows)
@@ -77,6 +83,9 @@ class FloatMatrix(
         return FloatMatrix(this.rows, other.columns, data)
     }
 
+    /***
+     * Matrix multiplication with creation of additional threads.
+     */
     fun dotTreads(other: FloatMatrix, threadsNumber: Int = 8): FloatMatrix {
         require(this.columns == other.rows)
 
@@ -111,6 +120,9 @@ class FloatMatrix(
         return FloatMatrix(this.rows, other.columns, data)
     }
 
+    /***
+     * Matrix addition.
+     */
     override operator fun plus(other: Matrix): FloatMatrix {
         require(other is FloatMatrix) { "other should be FloatMatrix" }
         require(this.rows == other.rows)
@@ -121,10 +133,16 @@ class FloatMatrix(
         }
     }
 
+    /***
+     * Applies given function to each element of matrix.
+     */
     fun apply(func: (Float) -> Float): FloatMatrix {
         return FloatMatrix(this.rows, this.columns) { i -> func(this.data[i]) }
     }
 
+    /***
+     * Get value by row and column.
+     */
     override operator fun get(row: Int, column: Int): Float {
         return data[row * columns + column]
     }
@@ -133,6 +151,9 @@ class FloatMatrix(
         return abs(a - b) < 1e-4
     }
 
+    /***
+     * Equals with precision (1e-4).
+     */
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
         if (javaClass != other?.javaClass) return false

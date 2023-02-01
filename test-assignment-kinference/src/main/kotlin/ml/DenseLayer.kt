@@ -17,10 +17,17 @@ class DenseLayer(
         activation
     )
 
+    /***
+     * Applies dense layer to input.
+     */
     fun apply(input: FloatMatrix) : FloatMatrix {
         return input.dot(kernel).plus(bias).apply(activation)
     }
 
+    /***
+     * Applies dense layer to input.
+     * Uses matrix multiplication with threads.
+     */
     fun applyThreads(input: FloatMatrix) : FloatMatrix {
         return input.dotTreads(kernel).plus(bias).apply(activation)
     }
