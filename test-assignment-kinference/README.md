@@ -12,26 +12,26 @@ Apply two different dense layers to an input matrix. Each layer has a kernel, a 
 5. It should be possible to use this code in the future. But, I assume that one who decides to use this code will have access to the source code and a right to modify it. Therefore, the main aim is the current task.
 
 ## Implementation walkthrough
-### FloatMatrix class
+### [FloatMatrix class](./src/main/kotlin/matrix/FloatMatrix.kt)
 I had several thoughts about how to implement this class. The main concern was data structure which will hold data in matrix cells.
 It is possible to use a generic List, a generic Array or a primitive array.
-I have decided to use a primitive implementation of arrays. This means that if one chooses to write a Matrix class with doubles or integers, they should duplicate the code, which is terrible but solves some problems with generics. Because using generics means that many functions should be inline, and there is no better way to write "times" or "plus" for all numeric types than this.
+I have decided to use a primitive implementation of arrays. This means that if one chooses to write a Matrix class with doubles or integers, they should duplicate the code, which is terrible but solves some problems with generics. Because using generics means that many functions should be inline, and there is no better way to write "times" or "plus" for all numeric types than [this](https://discuss.kotlinlang.org/t/how-to-write-generic-functions-for-all-numeric-types/7367).
 
-### DenseLayer class
+### [DenseLayer class](./src/main/kotlin/ml/DenseLayer.kt)
 The dense layer has a kernel and bias represented by FloatMatrix, activation function and method "apply". It is a simple class.
 
-### Activation functions
+### [Activation functions](./src/main/kotlin/ml/ActivationFunction.kt)
 I have decided to implement it like math libraries are often implemented. So, I have a singleton class (object) ActivationFunctions, which has "sigmoid" and "relu" static functions. I think it is better to have popular activation functions in this class rather than separate classes for all activation functions. If one wants to use a different activation function, they can pass it as a lambda or as a (Float) -> Float function straight to the dense layer.
 
 ## Tests
-I have implemented a few tests for each used function. Plus, there is a test class to measure the performance of different matrix multiplication implementations. Of course, this test does not mean delivering 100% accurate results. But it shows twice improved performance of matrix multiplication.
+I have implemented a few [tests](./src/test/kotlin) for each used function. Plus, there is a test [class to measure the performance](./src/test/kotlin/matrix/FloatMatrixPerformanceTest.kt) of different matrix multiplication implementations. Of course, this test does not mean delivering 100% accurate results. But it shows twice improved performance of matrix multiplication.
 
 ## Matrix multiplication
 There are several ways to improve performance:
 1. Better asymptotics.
 2. Parallel algorithms.
 
-In the first case, there exists the Strassen algorithm. But, it is hard to implement and should give a little performance boost on small matrices given in the task due to its complex nature.
+In the first case, there exists the [Strassen algorithm](https://en.wikipedia.org/wiki/Strassen_algorithm). But, it is hard to implement and should give a little performance boost on small matrices given in the task due to its complex nature.
 
 In the second case, there are (at least) three different ways to do it:
 1. GPU computations
