@@ -20,4 +20,8 @@ class DenseLayer(
     fun apply(input: FloatMatrix) : FloatMatrix {
         return input.dot(kernel).plus(bias).apply(activation)
     }
+
+    fun applyThreads(input: FloatMatrix) : FloatMatrix {
+        return input.dotTreads(kernel).plus(bias).apply(activation)
+    }
 }
