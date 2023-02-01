@@ -47,9 +47,12 @@ The performance test shows that I could not get any performance boost using coro
 I was able to boost dot() performance twice. Everyone is familiar with threads, so the code is clear to everyone (unlike coroutines).
 
 ## Possible future development
-1. Create a matrix interface.
+1. [DONE] Create a matrix interface.
 2. Write builder class for dense layer.
-3. Write documentation.
+3. [DONE] Write documentation.
 4. Add other popular activation functions.
 5. Provide alternatives to FloatMatrixes.
 6. Add more methods to Matrix classes.
+
+## Results
+Using multiple threads to multiply matrices gives a performance boost. But using threads in other functions is unnecessary because memory allocations and thread creation will take more time than performance boost. The task is completed in [Main.kt](./src/main/kotlin/Main.kt).
