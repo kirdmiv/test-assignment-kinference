@@ -49,6 +49,11 @@ class FloatMatrixTest {
     }
 
     @Test
+    fun dotTreads() {
+        assertEquals(A().dotTreads(C()), `A dot B`())
+    }
+
+    @Test
     fun plus() {
         assertEquals(A().plus(B()), `A plus B`())
     }
