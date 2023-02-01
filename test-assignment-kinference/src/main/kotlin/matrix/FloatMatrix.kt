@@ -10,7 +10,7 @@ class FloatMatrix(
     val rows: Int,
     val columns: Int,
     private val data: FloatArray
-) {
+) : Matrix {
     init {
         require(this.data.size == this.rows * this.columns)
     }
@@ -27,7 +27,8 @@ class FloatMatrix(
         FloatArray(rows * columns) { i -> init(i / columns, i % columns) }
     )
 
-    fun dot(other: FloatMatrix): FloatMatrix {
+    override fun dot(other: Matrix): FloatMatrix {
+        require(other is FloatMatrix) { "other should be FloatMatrix" }
         require(this.columns == other.rows)
 
         return FloatMatrix(this.rows, other.columns) { row, col ->
@@ -110,7 +111,8 @@ class FloatMatrix(
         return FloatMatrix(this.rows, other.columns, data)
     }
 
-    operator fun plus(other: FloatMatrix): FloatMatrix {
+    override operator fun plus(other: Matrix): FloatMatrix {
+        require(other is FloatMatrix) { "other should be FloatMatrix" }
         require(this.rows == other.rows)
         require(this.columns == other.columns)
 
@@ -123,12 +125,8 @@ class FloatMatrix(
         return FloatMatrix(this.rows, this.columns) { i -> func(this.data[i]) }
     }
 
-    operator fun get(row: Int, column: Int): Float {
+    override operator fun get(row: Int, column: Int): Float {
         return data[row * columns + column]
-    }
-
-    operator fun set(row: Int, column: Int, value: Float) {
-        data[row * columns + column] = value
     }
 
     private fun floatEquals(a: Float, b: Float): Boolean {
