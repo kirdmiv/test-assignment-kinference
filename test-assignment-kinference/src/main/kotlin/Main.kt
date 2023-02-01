@@ -1,6 +1,5 @@
 import matrix.FloatMatrix
-import ml.ActivationFunction.relu
-import ml.ActivationFunction.sigmoid
+import ml.ActivationFunction
 import ml.DenseLayer
 import kotlin.random.Random
 
@@ -13,12 +12,12 @@ fun main() {
     val denseLayer1 = DenseLayer(
         512, 512, ::randomInit,
         4, 512, ::randomInit,
-        ::sigmoid
+        ActivationFunction::sigmoid
     )
     val denseLayer2 = DenseLayer(
         512, 512, ::randomInit,
         4, 512, ::randomInit,
-        ::relu
+        ActivationFunction::relu
     )
 
     val output = denseLayer2.apply(denseLayer1.apply(input))
